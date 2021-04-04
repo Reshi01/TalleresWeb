@@ -14,8 +14,7 @@ public class BookCreator {
         this.repository = repository;
     }
 
-    public Book execute(Book book) throws Exception {
-        this.repository.save(book);
-        return book;
+    public Integer execute(Book book) {
+        return this.repository.save(book);
     }
 }

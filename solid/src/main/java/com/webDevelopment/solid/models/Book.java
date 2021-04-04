@@ -94,4 +94,11 @@ public class Book {
     public Integer getPageNumber() {
         return pageNumber;
     }
+
+    public String getBookDetails() {
+        return "{\"description\": "+ this.description + ","
+            + "\"price\": "+ this.price + ","
+            + "\"publishedYear\": "+ this.publishedYear + ","
+            + "\"pageNumber\": "+ this.pageNumber + "}";
+    }
 }

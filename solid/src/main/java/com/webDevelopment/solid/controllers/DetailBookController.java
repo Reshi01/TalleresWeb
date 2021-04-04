@@ -1,7 +1,6 @@
 package com.webDevelopment.solid.controllers;
 
 import com.webDevelopment.solid.models.Book;
-import com.webDevelopment.solid.useCases.BookCreator;
 import com.webDevelopment.solid.useCases.BookDetailer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,12 +18,14 @@ public class DetailBookController {
     }
 
     @GetMapping(value = "/books/{bookId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Book> createBook(@PathVariable(value = "bookId") String id) {
+    public ResponseEntity<String> createBook(@PathVariable(value = "bookId") String id) {
         HttpStatus codigo = HttpStatus.OK;
-        Book book = bookDetailer.execute(Integer.valueOf(id));
-        if (book == null) {
+        String details = null;
+        try {
+            details = bookDetailer.execute(Integer.valueOf(id));
+        } catch (Exception e) {
             codigo = HttpStatus.NOT_FOUND;
         }
-        return ResponseEntity.status(codigo).body(book);
+        return ResponseEntity.status(codigo).body(details);
     }
 }

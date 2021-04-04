@@ -29,9 +29,10 @@ public class BookRepositoryImpl implements BookRepository{
     }
 
     @Override
-    public void save(Book book) {
+    public Integer save(Book book) {
         books.put(nextId, book);
         nextId++;
+        return nextId-1;
     }
 
     @Override

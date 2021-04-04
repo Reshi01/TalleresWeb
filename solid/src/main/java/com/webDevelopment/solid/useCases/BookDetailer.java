@@ -5,8 +5,6 @@ import com.webDevelopment.solid.services.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class BookDetailer {
     private BookRepository repository;
@@ -16,7 +14,11 @@ public class BookDetailer {
         this.repository = repository;
     }
 
-    public Book execute(int id) {
-        return this.repository.getBook(id);
+    public String execute(int id) throws Exception {
+        Book book = this.repository.getBook(id);
+        if (book == null) {
+            throw new Exception("BookDetailer.execute Cause: Book not found");
+        }
+        return book.getBookDetails();
     }
 }
