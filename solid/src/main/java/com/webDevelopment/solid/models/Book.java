@@ -12,64 +12,86 @@ public class Book {
     private String description;
     private Integer pageNumber;
 
-    public Book(String title, String author, Integer publishedYear, Double price, String description, Integer pageNumber) {
+    public Book(String title, String author, Integer publishedYear, Double price, String description, Integer pageNumber) throws Exception {
+        validateTitle(title);
         this.title = title;
+        validateAuthor(author);
         this.author = author;
+        validatePublishedYear(publishedYear);
         this.publishedYear = publishedYear;
+        validatePrice(price);
         this.price = price;
+        validateDescription(description);
         this.description = description;
+        validatePageNumber(pageNumber);
         this.pageNumber = pageNumber;
     }
 
-    private boolean validateTitle (String title) {
-        //TODO
-        this.title = title;
-        return true;
+    private void validateTitle (String title) throws Exception {
+        if (title.length() < 1) {
+            throw new Exception("Invalid title length");
+        }
     }
 
-    private boolean validateAuthor (String author) {
+    private void validateAuthor (String author) throws Exception {
         Pattern pattern = Pattern.compile("[A-Za-z]+\\s[A-Za-z]+");
         Matcher matcher = pattern.matcher(author);
-        if (matcher.matches()) {
-            this.author = author;
-            return true;
+        if (!matcher.matches()) {
+            throw new Exception("Invalid author");
         }
-        return false;
     }
 
-    private boolean validatePrice (Double price) {
+    private void validatePrice (Double price) throws Exception {
         if (price <= 10000) {
-            return false;
+            throw new Exception("Invalid price");
         }
         if (price % 1 != 0) {
-            return false;
+            throw new Exception("Invalid price");
         }
-        this.price = price;
-        return true;
     }
 
-    private boolean validateDescription (String description) {
+    private void validateDescription (String description) throws Exception {
         if (description.length() > 200) {
-            return false;
+            throw new Exception("Invalid description");
         }
-        this.description = description;
-        return true;
     }
 
-    private boolean validatePublishedYear (Integer publishedYear) {
+    private void validatePublishedYear (Integer publishedYear) throws Exception {
         if (publishedYear < 1000) {
-            return false;
+            throw new Exception("Invalid published year");
         }
-        if (publishedYear > Calendar.YEAR) {
-            return false;
+        if (publishedYear > Calendar.getInstance().get(Calendar.YEAR)) {
+            throw new Exception("Invalid published year");
         }
-        this.publishedYear = publishedYear;
-        return true;
     }
 
-    public String createBookCard()
-    {
-        return "The book " + this.title + " has benn written by " + this.author + " and was " +
-                "published in " + this.publishedYear + ". The book's price is " + this.price;
+    private void validatePageNumber (int pageNumber) throws Exception {
+        if (pageNumber < 1 || pageNumber > 1500) {
+            throw new Exception("Invalid page number");
+        }
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public Integer getPublishedYear() {
+        return publishedYear;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Integer getPageNumber() {
+        return pageNumber;
     }
 }

@@ -5,17 +5,18 @@ import com.webDevelopment.solid.services.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class BookCreator {
+public class BookDetailer {
     private BookRepository repository;
 
     @Autowired
-    public BookCreator(BookRepository repository){
+    public BookDetailer(BookRepository repository){
         this.repository = repository;
     }
 
-    public Book execute(Book book) throws Exception {
-        this.repository.save(book);
-        return book;
+    public Book execute(int id) {
+        return this.repository.getBook(id);
     }
 }
